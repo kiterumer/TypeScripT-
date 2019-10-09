@@ -108,3 +108,54 @@ function swap<T,U>(tuple: [T,U]): [U,T] {
 swap([7,'yyy'])
 
 
+interface Lengthwise {
+    length: number
+}
+
+function loggingIdentity1<T extends Lengthwise>(args: T): T {
+    return args
+}
+
+loggingIdentity1([1,2])
+
+// 泛型接口
+
+interface CreateArrayFunc {
+    <T>(length: number, value: T): Array<T>
+}
+
+// interface CreateArrayFunc<T> {
+//     (length: number, value: T): Array<T>
+// }
+
+// let createArray2: CreateArrayFunc<any>
+
+let createArray1: CreateArrayFunc
+createArray1 = function<T>(length: number, value: T): Array<T> {
+    let result: T[] = []
+    for(let i = 0; i < length; i++){
+        result[i] = value
+    }
+    return result
+}
+
+createArray1(7,'y')
+
+
+// 泛型类 
+
+class GenericNumber<T> {
+    zeroValue: T
+    add: (x: T, y: T) => T
+}
+
+let myGenericNumber = new GenericNumber<number>()
+myGenericNumber.zeroValue = 7
+myGenericNumber.add = function(x,y) {
+    return x + y
+}
+
+
+
+
+
